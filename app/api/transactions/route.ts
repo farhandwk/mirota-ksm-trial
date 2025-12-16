@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { loadSpreadsheet, SHEET_TITLES } from '@../../../lib/googleSheets';
-import { transactionSchema } from '@../../../lib/validators';
+import { loadSpreadsheet, SHEET_TITLES } from '../../../lib/googleSheets';
+import { transactionSchema } from '../../../lib/validators';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: Request) {
