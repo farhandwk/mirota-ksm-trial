@@ -145,40 +145,50 @@ export default function InventoryPage() {
             ) : error ? (
               <div className="text-center py-10 text-red-500">Gagal terhubung ke server</div>
             ) : (
-              <Table>
+                <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[100px]">QR Code</TableHead>
+                    <TableRow>
+                    {/* KITA PERLEBAR KOLOM INI DARI 100px JADI 150px */}
+                    <TableHead className="w-[150px]">QR Code</TableHead>
                     <TableHead>Nama Produk</TableHead>
                     <TableHead>Stok</TableHead>
                     <TableHead>Lokasi</TableHead>
-                  </TableRow>
+                    </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.data?.map((item: any) => (
+                    {data.data?.map((item: any) => (
                     <TableRow key={item.id}>
-                      <TableCell>
-                        <div className="bg-white p-1 border inline-block rounded">
-                          <QRCode value={item.qr_code} size={48} />
+                        <TableCell>
+                        {/* PERUBAHAN DISINI: size={80} dan padding diperbesar */}
+                        <div className="bg-white p-2 border inline-block rounded-md">
+                            <QRCode 
+                            value={item.qr_code} 
+                            size={80} 
+                            level="M" // Tingkat koreksi error (M=Medium) agar lebih mudah discan
+                            />
                         </div>
-                        <div className="text-[10px] text-gray-400 mt-1 font-mono">{item.qr_code}</div>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {item.name}
-                        <div className="text-xs text-gray-400 font-normal">ID: {item.id.substring(0,6)}...</div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="text-sm px-3 py-1">
-                          {item.stock} {item.unit}
+                        <div className="text-[10px] text-gray-400 mt-2 font-mono font-bold tracking-wider">
+                            {item.qr_code}
+                        </div>
+                        </TableCell>
+                        <TableCell className="font-medium align-top pt-4">
+                        <div className="text-base">{item.name}</div>
+                        <div className="text-xs text-gray-400 font-normal mt-1">ID: {item.id.substring(0,8)}...</div>
+                        </TableCell>
+                        <TableCell className="align-top pt-4">
+                        <Badge variant="secondary" className="text-sm px-3 py-1 font-bold">
+                            {item.stock} {item.unit}
                         </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{item.department_id}</Badge>
-                      </TableCell>
+                        </TableCell>
+                        <TableCell className="align-top pt-4">
+                        <Badge variant="outline" className="border-[#004aad] text-[#004aad]">
+                            {item.department_id}
+                        </Badge>
+                        </TableCell>
                     </TableRow>
-                  ))}
+                    ))}
                 </TableBody>
-              </Table>
+                </Table>
             )}
           </CardContent>
         </Card>
