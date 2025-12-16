@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import QRScanner from '@/components/QRScanner';
+import QRScanner from '../../components/QRScanner';
 
 export default function PetugasPage() {
   // --- STATE ---

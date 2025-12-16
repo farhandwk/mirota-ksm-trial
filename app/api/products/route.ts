@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { loadSpreadsheet, SHEET_TITLES } from '@/lib/googleSheets';
-import { productSchema } from '@/lib/validators';
+import { loadSpreadsheet, SHEET_TITLES } from '../../../lib/googleSheets';
+import { productSchema } from '@../../../lib/validators';
 import { v4 as uuidv4 } from 'uuid';
 
 // 1. FUNGSI GET (Untuk Mengambil Data ke Tabel)
