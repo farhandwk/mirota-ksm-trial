@@ -187,7 +187,7 @@ export default function InventoryPage() {
                         </TableCell>
                         <TableCell className="font-medium align-top pt-4">
                         <div className="text-base">{item.name}</div>
-                        <div className="text-xs text-gray-400 font-normal mt-1">ID: {item.id.substring(0,8)}...</div>
+                        <div className="text-xs text-gray-400 font-normal mt-1">ID: {(item.id || '').substring(0, 8)}....</div>
                         </TableCell>
                         <TableCell className="align-top pt-4">
                         <Badge variant="secondary" className="text-sm px-3 py-1 font-bold">
