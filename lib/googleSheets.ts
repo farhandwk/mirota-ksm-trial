@@ -21,5 +21,6 @@ export const SHEET_TITLES = {
   DEPARTMENTS: 'departemen',
   PRODUCTS: 'produk',
   TRANSACTIONS: 'transaksi',
+  DEPARTEMENTS: 'departemen',
   CONFIG: 'konfigurasi'
 };

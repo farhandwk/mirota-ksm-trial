@@ -1,24 +1,31 @@
 'use client';
 
 import { useState } from 'react';
-import QRScanner from '../../components/QRScanner'; // Import relative path
-import { Button } from "../../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "../../components/ui/card";
+import useSWR from 'swr'; // [FIX 1] Import di atas, bukan di dalam komponen
+import QRScanner from '../../components/QRScanner'; 
+import { Button } from "../../components/ui/button"; // Gunakan @ agar lebih aman path-nya
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { Badge } from "../../components/ui/badge";
-import { ArrowLeft, Camera, CheckCircle, PackagePlus, PackageMinus } from "lucide-react"; // Ikon bawaan shadcn/lucide
+import { ArrowLeft, CheckCircle, PackagePlus, PackageMinus, Camera } from "lucide-react"; 
+
+// [FIX 2] Pindahkan fetcher keluar komponen agar tidak direcreate setiap render
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function PetugasPage() {
+  // [FIX 1] Panggil useSWR dengan cara standar
+  const { data: deptData } = useSWR('/api/departments', fetcher);
+
   // --- STATE ---
   const [activeTab, setActiveTab] = useState<string>('IN');
   const [step, setStep] = useState<'SETUP' | 'SCANNING' | 'INPUT_QTY'>('SETUP');
   
   const [deptId, setDeptId] = useState('');
   const [scannedQR, setScannedQR] = useState('');
-  const [qty, setQty] = useState<string>('1'); // String agar bisa kosong saat diketik
+  const [qty, setQty] = useState<string>('1'); 
   const [isLoading, setIsLoading] = useState(false);
 
   // --- HANDLERS ---
@@ -72,7 +79,6 @@ export default function PetugasPage() {
   };
 
   // --- RENDER HELPERS ---
-  // Fungsi untuk reset flow saat pindah tab
   const handleTabChange = (val: string) => {
     setActiveTab(val);
     setStep('SETUP');
@@ -114,7 +120,6 @@ export default function PetugasPage() {
                 {step === 'SCANNING' && "Scanning..."}
                 {step === 'INPUT_QTY' && "Konfirmasi Jumlah"}
               </CardTitle>
-              {/* Badge Status Mode */}
               <Badge variant={activeTab === 'IN' ? 'default' : 'destructive'} className={activeTab === 'OUT' ? 'bg-orange-500 hover:bg-orange-600' : ''}>
                 MODE: {activeTab === 'IN' ? 'IN' : 'OUT'}
               </Badge>
@@ -139,14 +144,21 @@ export default function PetugasPage() {
                         <SelectValue placeholder="Pilih Departemen..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="D-001">D-001 (Elektronik)</SelectItem>
-                        <SelectItem value="D-002">D-002 (ATK)</SelectItem>
-                        <SelectItem value="D-003">D-003 (Pantry)</SelectItem>
+                        {!deptData ? (
+                           <SelectItem value="loading" disabled>Memuat Data...</SelectItem>
+                        ) : (
+                           deptData.data?.map((dept: any) => (
+                             <SelectItem key={dept.id} value={dept.id}>
+                               {dept.nama} ({dept.id})
+                             </SelectItem>
+                           ))
+                        )}
                       </SelectContent>
                     </Select>
                   </div>
                 )}
-                
+
+                {/* [FIX 3] Mengembalikan Tombol Mulai Kamera yang hilang */}
                 <div className="pt-4">
                   <Button onClick={handleStartScan} className="w-full h-14 text-lg font-bold shadow-md">
                     <Camera className="mr-2 h-6 w-6" />

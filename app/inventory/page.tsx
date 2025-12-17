@@ -14,13 +14,15 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
 } from "../../components/ui/select";
 import { Badge } from "../../components/ui/badge";
+import Navbar from "../../components/Navbar"
 
 // Fetcher
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function InventoryPage() {
   const { data, error, mutate } = useSWR('/api/products', fetcher);
-  
+
+  const { data: deptData } = useSWR('/api/departments', fetcher);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     nama_produk: '',
@@ -58,7 +60,9 @@ export default function InventoryPage() {
 
   return (
     <div className="min-h-screen bg-white p-6 md:p-10 font-sans">
+      <Navbar/>
       <div className="max-w-6xl mx-auto space-y-8">
+        
         
         {/* HEADER */}
         <div>
@@ -96,9 +100,19 @@ export default function InventoryPage() {
                     <SelectValue placeholder="Pilih Dept..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="D-001">D-001 (Elektronik)</SelectItem>
-                    <SelectItem value="D-002">D-002 (ATK)</SelectItem>
-                    <SelectItem value="D-003">D-003 (Pantry)</SelectItem>
+                    {/* Jika data belum loading */}
+                    {!deptData ? (
+                      <SelectItem value="loading" disabled>Memuat...</SelectItem>
+                    ) : deptData.data?.length === 0 ? (
+                      <SelectItem value="empty" disabled>Belum ada Dept</SelectItem>
+                    ) : (
+                      // LOOPING DATA DARI API
+                      deptData.data.map((dept: any) => (
+                        <SelectItem key={dept.id} value={dept.id}>
+                          {dept.id} ({dept.nama})
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               </div>

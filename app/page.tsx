@@ -1,65 +1,76 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { Button } from "../components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Warehouse, ScanLine, ArrowRight } from "lucide-react";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Kontol
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4">
+      
+      {/* Brand Section */}
+      <div className="text-center mb-10 space-y-4">
+        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#004aad] rounded-2xl shadow-xl mb-4">
+           <span className="text-white text-4xl font-extrabold">M</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#004aad] tracking-tight">
+          Sistem Gudang Terpadu
+        </h1>
+        <p className="text-lg text-gray-500 max-w-lg mx-auto">
+          Mirota KSM Inventory Management System. Kelola stok real-time dan monitoring aktivitas gudang.
+        </p>
+      </div>
+
+      {/* Role Selection Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+        
+        {/* Card 1: Kepala Gudang */}
+        <Link href="/inventory" className="group">
+          <Card className="h-full border-2 border-transparent hover:border-[#004aad] transition-all hover:shadow-xl cursor-pointer">
+            <CardHeader className="text-center pb-2">
+              <div className="w-16 h-16 bg-blue-100 text-[#004aad] rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <Warehouse className="w-8 h-8" />
+              </div>
+              <CardTitle className="text-xl">Kepala Gudang</CardTitle>
+              <CardDescription>Akses Dashboard & Laporan</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="text-gray-500 mb-6 text-sm">
+                Kelola master produk, pantau stok menipis, dan lihat riwayat audit log transaksi.
+              </p>
+              <Button className="w-full group-hover:bg-[#004aad]">
+                Masuk Dashboard <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
+        </Link>
+
+        {/* Card 2: Petugas */}
+        <Link href="/petugas" className="group">
+          <Card className="h-full border-2 border-transparent hover:border-orange-500 transition-all hover:shadow-xl cursor-pointer">
+            <CardHeader className="text-center pb-2">
+              <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <ScanLine className="w-8 h-8" />
+              </div>
+              <CardTitle className="text-xl">Petugas Lapangan</CardTitle>
+              <CardDescription>Scanner Mobile</CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <p className="text-gray-500 mb-6 text-sm">
+                Akses scanner QR Code untuk pencatatan barang masuk dan barang keluar di lapangan.
+              </p>
+              <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50 group-hover:border-orange-500">
+                Buka Scanner <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
+        </Link>
+
+      </div>
+
+      {/* Footer */}
+      <div className="mt-12 text-center text-sm text-gray-400">
+        &copy; 2025 Mirota KSM Tech Team. All rights reserved.
+      </div>
     </div>
   );
 }

@@ -3,6 +3,30 @@ import { loadSpreadsheet, SHEET_TITLES } from '../../../lib/googleSheets';
 import { transactionSchema } from '../../../lib/validators';
 import { v4 as uuidv4 } from 'uuid';
 
+export async function GET() {
+  try {
+    const doc = await loadSpreadsheet();
+    // Pastikan nama sheet ini sesuai dengan konstanta SHEET_TITLES.TRANSACTIONS anda
+    const sheet = doc.sheetsByTitle[SHEET_TITLES.TRANSACTIONS]; 
+    const rows = await sheet.getRows();
+
+    // Kita balik urutannya (reverse) agar transaksi terbaru muncul paling atas
+    const transactions = rows.map((row) => ({
+      id: row.get('id'),
+      date: row.get('tanggal'),
+      type: row.get('tipe'), // IN atau OUT
+      qr_code: row.get('kode_qr_produk'),
+      qty: row.get('qty'),
+      pic: row.get('petugas'),
+      dept_id: row.get('id_departemen') || '-',
+    })).reverse(); 
+
+    return NextResponse.json({ success: true, data: transactions });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
