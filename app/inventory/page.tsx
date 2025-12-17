@@ -21,7 +21,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function InventoryPage() {
   const { data, error, mutate } = useSWR('/api/products', fetcher);
-
+  const { data: unitData } = useSWR('/api/units', fetcher);
   const { data: deptData } = useSWR('/api/departments', fetcher);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -125,13 +125,21 @@ export default function InventoryPage() {
                   onValueChange={(val) => setFormData({...formData, satuan: val})}
                 >
                   <SelectTrigger>
-                    <SelectValue />
+                    <SelectValue placeholder="Pilih..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="PCS">PCS</SelectItem>
-                    <SelectItem value="BOX">BOX</SelectItem>
-                    <SelectItem value="KG">KG</SelectItem>
-                    <SelectItem value="UNIT">UNIT</SelectItem>
+                    {!unitData ? (
+                       <SelectItem value="loading" disabled>Memuat...</SelectItem>
+                    ) : unitData.data?.length === 0 ? (
+                       <SelectItem value="empty" disabled>Belum ada Satuan</SelectItem>
+                    ) : (
+                       unitData.data?.map((u: any) => (
+                         // Kita simpan NAMANYA (misal: "PCS"), bukan ID-nya, agar sesuai data lama
+                         <SelectItem key={u.id} value={u.nama}>
+                           {u.nama}
+                         </SelectItem>
+                       ))
+                    )}
                   </SelectContent>
                 </Select>
               </div>

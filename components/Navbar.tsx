@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from "../components/ui/button";
-import { Package, History, LogOut, ChartPie, Building2 } from "lucide-react";
+import { Package, History, LogOut, ChartPie, Building2, Scale } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -65,6 +65,16 @@ export default function Navbar() {
             <Building2 className="w-4 h-4 mr-2" /> {/* Pastikan import Building2 dari lucide-react */}
             Departemen
         </Button>
+        </Link>
+
+        <Link href="/units">
+          <Button 
+            variant={isActive('/units') ? 'default' : 'ghost'}
+            className={isActive('/units') ? 'bg-[#004aad]' : 'text-gray-600 hover:text-[#004aad] hover:bg-blue-50'}
+          >
+            <Scale className="w-4 h-4 mr-2" />
+            Satuan
+          </Button>
         </Link>
 
           {/* Logout / Back to Home */}
