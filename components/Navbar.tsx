@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { Package, History, LogOut, ChartPie, Building2, Scale, Users } from "lucide-react";
 
 export default function Navbar() {
@@ -51,7 +51,7 @@ export default function Navbar() {
                 <Building2 className="w-4 h-4 mr-2" /> Dept
               </Button>
             </Link>
-            
+
             <Link href="/units">
               <Button variant={isActive('/units') ? 'default' : 'ghost'} className={isActive('/units') ? 'bg-[#004aad]' : 'text-gray-600 hover:text-[#004aad] hover:bg-blue-50'}>
                 <Scale className="w-4 h-4 mr-2" /> Satuan

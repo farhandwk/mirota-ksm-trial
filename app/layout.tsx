@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 // Import Providers dari komponen buatan kita, BUKAN dari next-auth langsung
-import { Providers } from "@/components/Providers"; 
+import { Providers } from "../components/Providers"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
