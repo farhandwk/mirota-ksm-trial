@@ -9,8 +9,11 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/table";
 import { Badge } from "../../components/ui/badge";
+import { Button } from "../../components/ui/button";
 import { AlertTriangle, TrendingUp, Package, Building2 } from "lucide-react";
 import StockTrendChart from '../../components/StockTrendChart';
+import { signOut } from "next-auth/react"; 
+import { LogOut } from "lucide-react";
 
 // Fetcher
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -57,6 +60,21 @@ export default function AnalyticsPage() {
       <Navbar />
       
       <div className="max-w-7xl mx-auto p-6 md:p-10 space-y-8">
+        <div className="flex justify-between items-start">
+            <div>
+                <h1 className="text-3xl font-bold text-[#004aad]">Dashboard Analytics</h1>
+                <p className="text-gray-500">Pantau performa gudang secara real-time.</p>
+            </div>
+            
+            {/* Tombol Logout Manual (Hanya muncul jika Navbar tidak ada/Manager) */}
+            <Button 
+                variant="outline" 
+                className="text-red-600 border-red-200 hover:bg-red-50"
+                onClick={() => signOut({ callbackUrl: '/login' })}
+            >
+                <LogOut className="w-4 h-4 mr-2" /> Keluar
+            </Button>
+        </div>
         
         {/* HEADER */}
         <div>

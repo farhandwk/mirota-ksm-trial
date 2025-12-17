@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Warehouse, ScanLine, ArrowRight } from "lucide-react";
+import { redirect } from 'next/navigation';
 
 export default function LandingPage() {
   return (
@@ -73,4 +74,5 @@ export default function LandingPage() {
       </div>
     </div>
   );
+  redirect('/inventory')
 }
