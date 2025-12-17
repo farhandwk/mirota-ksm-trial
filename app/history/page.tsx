@@ -57,7 +57,7 @@ export default function HistoryPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.data?.map((log: any) => (
+                  {data?.data?.map((log: any) => (
                     <TableRow key={log.id}>
                       <TableCell className="font-mono text-xs text-gray-500">
                         {formatDate(log.date)}

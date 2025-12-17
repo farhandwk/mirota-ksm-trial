@@ -176,7 +176,7 @@ export default function DepartmentsPage() {
                         ) : data.data.length === 0 ? (
                             <TableRow><TableCell colSpan={4} className="text-center py-4 text-gray-400">Belum ada departemen</TableCell></TableRow>
                         ) : (
-                          data.data.map((dept: any) => (
+                          data?.data?.map((dept: any) => (
                             <TableRow key={dept.id} className={editingId === dept.id ? "bg-orange-50" : ""}>
                                 <TableCell className="font-bold font-mono text-[#004aad]">{dept.id}</TableCell>
                                 <TableCell className="font-medium flex items-center gap-2">
